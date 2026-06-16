@@ -116,17 +116,24 @@ function updateFrames(h){
 function updateTLB(h, tlbHits, tlbMisses, total){
   const row=document.getElementById('tlbRow');
   row.innerHTML='';
-  if(h.tlb.length===0){row.innerHTML='<span style="font-size:12px;color:var(--muted)">TLB is empty</span>';return;}
+  if(h.tlb.length===0){
+    row.innerHTML='<span style="font-size:12px;color:var(--muted)">TLB is empty — run simulation</span>';
+    return;
+  }
   h.tlb.forEach(p=>{
     const e=document.createElement('div');
-    e.className='tlb-entry'+(p===h.page?' active':'');
+    const isCurrent = p===h.page;
+    const isHit = isCurrent && h.tlbHit;
+    const isMiss = isCurrent && !h.tlbHit;
+    e.className='tlb-entry'+(isHit?' tlb-hit':isMiss?' tlb-miss':'');
     e.textContent='Page '+p;
     row.appendChild(e);
   });
   const hitRate=total>0?Math.round(tlbHits/total*100):0;
-  document.getElementById('tlbStats').textContent=
-    'TLB hits: '+tlbHits+' | TLB misses: '+tlbMisses+' | Hit rate: '+hitRate+'% — '+
-    (h.tlbHit?'✓ Page '+h.page+' found in TLB (fast!)':'✗ Page '+h.page+' not in TLB, checked page table');
+  document.getElementById('tlbStats').innerHTML=
+    '<div class="tlb-stat-item"><div class="tlb-stat-label">TLB HITS</div><div class="tlb-stat-value" style="color:#22c55e">'+tlbHits+'</div></div>'+
+    '<div class="tlb-stat-item"><div class="tlb-stat-label">TLB MISSES</div><div class="tlb-stat-value" style="color:#ef4444">'+tlbMisses+'</div></div>'+
+    '<div class="tlb-stat-item"><div class="tlb-stat-label">HIT RATE</div><div class="tlb-stat-value" style="color:#a855f7">'+hitRate+'%</div></div>';
 }
 
 function buildTimeline(){

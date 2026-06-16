@@ -130,11 +130,33 @@
   /* tlb section */
   .tlb-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .tlb-entry{
-    padding:5px 12px;border-radius:6px;font-size:12px;font-family:monospace;
-    border:1px solid var(--border);background:var(--surface2);color:var(--muted)
+    padding:6px 14px;border-radius:8px;font-size:13px;
+    font-family:monospace;font-weight:500;
+    border:1px solid var(--border);
+    background:var(--surface2);color:var(--muted);
+    transition:all 0.3s;
   }
-  .tlb-entry.active{background:var(--accent-bg);border-color:#4f46e5;color:#a5b4fc}
-  .tlb-stats{font-size:12px;color:var(--muted);margin-top:8px}
+.tlb-entry.tlb-hit{
+    background:#0f2d1a;border-color:#22c55e;
+    color:#22c55e;
+    box-shadow: 0 0 10px rgba(34,197,94,0.3);
+  }
+.tlb-entry.tlb-miss{
+    background:#2d0f2f;border-color:#ef4444;
+    color:#ef4444;
+    box-shadow: 0 0 10px rgba(239,68,68,0.3);
+  }
+.tlb-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;margin-top:12px;
+  }
+.tlb-stat-item{
+    background:var(--surface2);border:1px solid var(--border);
+    border-radius:8px;padding:8px 12px;text-align:center;
+  }
+.tlb-stat-label{font-size:10px;color:var(--muted);margin-bottom:4px}
+.tlb-stat-value{font-size:18px;font-weight:600;color:#fff}
 
   @media(max-width:600px){
     .input-row{grid-template-columns:1fr}
